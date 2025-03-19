@@ -1,0 +1,14 @@
+function enable_backorders_for_all_variations() {
+    $args = array(
+        'post_type'   => 'product_variation',
+        'numberposts' => -1
+    );
+    
+    $variations = get_posts($args);
+
+    foreach ($variations as $variation) {
+        update_post_meta($variation->ID, '_backorders', 'yes'); // Use 'notify' if needed
+        update_post_meta($variation->ID, '_manage_stock', 'yes');
+    }
+}
+add_action('init', 'enable_backorders_for_all_variations');
